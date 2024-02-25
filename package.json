@@ -1,0 +1,51 @@
+{
+  "name": "base-project",
+  "version": "1.0.0",
+  "description": "Base project setup with fastify, database, linter, prettier, tests",
+  "main": "server.js",
+  "scripts": {
+    "gcp-build": "npm run build",
+    "build": "rm -rf build && tsc --project tsconfig.build.json",
+    "start": "node build/server.js",
+    "start:dev": "ts-node src/server.ts",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "lint:fix": "eslint --ignore-path .eslintignore --ext .js,.ts . --fix",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "migrate": "node-pg-migrate"
+  },
+  "author": "Arin Hlaj",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "c8": "^7.13.0",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-sql": "^2.3.2",
+    "prettier": "^2.8.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@fastify/autoload": "^5.7.1",
+    "@fastify/cors": "^8.2.0",
+    "@sinclair/typebox": "^0.25.24",
+    "@types/http-errors": "^2.0.1",
+    "@types/tap": "^15.0.8",
+    "ejs": "^3.1.8",
+    "env-schema": "^5.2.0",
+    "fastify": "^4.14.1",
+    "fastify-plugin": "^4.5.0",
+    "firebase": "^10.4.0",
+    "fluent-json-schema": "^4.1.0",
+    "http-errors": "^2.0.0",
+    "pino-pretty": "^9.4.0",
+    "tap": "^16.3.4",
+    "undici": "^5.20.0"
+  }
+}

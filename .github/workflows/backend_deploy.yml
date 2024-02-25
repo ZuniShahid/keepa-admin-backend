@@ -1,0 +1,47 @@
+name: backend-push-dev
+
+# This workflow is triggered on pushes to branch master when changes happen in backend.
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  test_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.15.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      # - name: Run Tests
+      #   run: npm run test:ci
+
+      - name: Remove node modules
+        run: rm -rf node_modules
+
+      - name: Install without dev dependencies
+        run: npm ci --omit=dev
+
+      - name: Move environment variables from app.dev.tpl.yaml to app.yaml
+        run: node ./scripts/github_env_to_app_engine_dev.js
+        env:
+          API_KEY: ${{ secrets.API_KEY_DEV }}
+          APP_ID: ${{ secrets.APP_ID_DEV }}
+
+      - name: 'Authenticate with GCP'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.APP_ENGINE_DEPLOY_SA_DEV }}
+
+      - name: 'Deploy to App engine'
+        uses: 'google-github-actions/deploy-appengine@v1'

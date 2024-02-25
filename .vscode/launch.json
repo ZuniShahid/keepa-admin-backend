@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Integration Tests",
+      "program": "${workspaceFolder}/node_modules/tap/bin/run",
+      "args": [
+        "--node-arg=--require=ts-node/register/transpile-only",
+        "--no-cov",
+        // "--only",
+        "src/tests/api/points/getPointsProgress.test.ts",
+        "--no-timeout"
+      ],
+      "envFile": "${workspaceFolder}/.env.test",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Service",
+      "program": "${workspaceFolder}/node_modules/ts-node/dist/bin.js",
+      "args": ["${workspaceFolder}/src/server.ts"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
