@@ -24,16 +24,16 @@ function buildServer(config: EnvConfig): FastifyInstance {
     origin: true,
   });
 
-  fastify.register(autoLoad, {
-    dir: path.join(__dirname, 'plugins'),
-    options: config,
-  });
+  // fastify.register(autoLoad, {
+  //   dir: path.join(__dirname, 'plugins'),
+  //   options: config,
+  // });
 
   fastify.register(autoLoad, {
     dir: path.join(__dirname, 'routes'),
   });
 
-  fastify.decorate('firebase', initFirestore(config))
+  fastify.decorate('firebase', initFirestore(config));
 
   fastify.setErrorHandler((error, _req, reply) => {
     if (error instanceof errors.HttpError || error.statusCode === 400 || error.statusCode === 401) {
